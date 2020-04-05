@@ -12,7 +12,7 @@ namespace BlazorBlogAuthor.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
+        public IBlogStore DataStore => DependencyService.Get<IBlogStore>();
 
         bool isBusy = false;
         public bool IsBusy

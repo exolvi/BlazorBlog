@@ -13,16 +13,29 @@ namespace BlazorBlogAuthor.Views
     [DesignTimeVisible(false)]
     public partial class NewItemPage : ContentPage
     {
-        public Item Item { get; set; }
+        public Post Item { get; set; }
+
+        public NewItemPage(Post post)
+        {
+            InitializeComponent();
+
+            Item = post;
+
+            BindingContext = this;
+        }
 
         public NewItemPage()
         {
             InitializeComponent();
 
-            Item = new Item
+            Item = new Post
             {
-                Text = "Item name",
-                Description = "This is an item description."
+                Title = "",
+                Author = "Bob Crawford",
+                Body = "",
+                IsPublished = false,
+                Id = Guid.Empty,
+                Tags = ""
             };
 
             BindingContext = this;
@@ -30,13 +43,35 @@ namespace BlazorBlogAuthor.Views
 
         async void Save_Clicked(object sender, EventArgs e)
         {
-            MessagingCenter.Send(this, "AddItem", Item);
-            await Navigation.PopModalAsync();
+            if (Item.Id == Guid.Empty)
+            {
+                Item.Id = Guid.NewGuid();
+                MessagingCenter.Send(this, "AddItem", Item);
+            }
+            else
+            {
+                MessagingCenter.Send(this, "EditItem", Item);
+            }
+            
+            await Navigation.PopModalAsync(true);
         }
 
         async void Cancel_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PopModalAsync();
+            await Navigation.PopModalAsync(true);
+        }
+
+        async void Delete_Clicked(object sender, EventArgs e)
+        {
+            MessagingCenter.Send(this, "DeleteItem", Item);
+            if (Navigation.ModalStack.Count > 0)
+            {
+                await Navigation.PopModalAsync(true);
+            }
+            else
+            {
+                await Navigation.PopAsync(true);
+            }
         }
     }
 }

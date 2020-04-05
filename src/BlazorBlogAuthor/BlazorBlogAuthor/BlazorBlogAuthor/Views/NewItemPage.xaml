@@ -5,19 +5,28 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="BlazorBlogAuthor.Views.NewItemPage"
-             Title="New Item">
+             Title="New Post">
     
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Cancel" Clicked="Cancel_Clicked" />
         <ToolbarItem Text="Save" Clicked="Save_Clicked" />
+        <ToolbarItem Text="Cancel" Clicked="Cancel_Clicked" />
+        <ToolbarItem Text="Delete" Clicked="Delete_Clicked" IsDestructive="True" />
     </ContentPage.ToolbarItems>
     
     <ContentPage.Content>
         <StackLayout Spacing="20" Padding="15">
-            <Label Text="Text" FontSize="Medium" />
-            <Entry Text="{Binding Item.Text}" d:Text="Item name" FontSize="Small" />
-            <Label Text="Description" FontSize="Medium" />
-            <Editor Text="{Binding Item.Description}" d:Text="Item description" FontSize="Small" Margin="0" />
+            <Label Text="Title" FontSize="Medium" />
+            <Entry Text="{Binding Item.Title}" d:Text="There and Back Again" FontSize="Small" />
+            <Label Text="Author" FontSize="Medium" />
+            <Entry Text="{Binding Item.Author}" d:Text="Bilbo Baggins" FontSize="Small" Margin="0" />
+            <Label Text="Tags" FontSize="Medium" />
+            <Entry Text="{Binding Item.Tags}" d:Text="Tags" FontSize="Small" Margin="0" />
+            <Label Text="Publish Date" FontSize="Medium" />
+            <DatePicker Date="{Binding Item.PublishDate}" FontSize="Small" Margin="0" />
+            <Label Text="Body" FontSize="Medium" />
+            <ScrollView>
+                <Editor Text="{Binding Item.Body}" d:Text="Body" FontSize="Small" Margin="0" AutoSize="TextChanges" />
+            </ScrollView>            
         </StackLayout>
     </ContentPage.Content>
     
