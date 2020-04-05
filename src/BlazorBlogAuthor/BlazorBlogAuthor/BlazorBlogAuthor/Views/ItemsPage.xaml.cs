@@ -30,13 +30,13 @@ namespace BlazorBlogAuthor.Views
         async void OnItemSelected(object sender, EventArgs args)
         {
             var layout = (BindableObject)sender;
-            var item = (Item)layout.BindingContext;
-            await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(item)));
+            var item = (Post)layout.BindingContext;
+            await Navigation.PushModalAsync(new NavigationPage(new NewItemPage(item)), true);
         }
 
         async void AddItem_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new NavigationPage(new NewItemPage()));
+            await Navigation.PushModalAsync(new NavigationPage(new NewItemPage()), true);
         }
 
         protected override void OnAppearing()
